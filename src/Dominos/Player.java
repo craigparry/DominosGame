@@ -17,4 +17,16 @@ public class Player {
         return tray;
     }
 
+    public void printTray(){
+        for(Dominos s: tray){
+            System.out.print(s.toString()+", ");
+        }
+        System.out.println();
+    }
+
+    public void setTray(List<Dominos> newTray){
+        tray = newTray;
+
+    }
+
 }

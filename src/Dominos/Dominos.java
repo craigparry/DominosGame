@@ -3,9 +3,6 @@ package Dominos;
 public class Dominos {
 
     private int leftSide;
-
-
-
     private int rightSide;
     private static final int max = 6;
 
@@ -31,6 +28,11 @@ public class Dominos {
 
     public void setRightSide(int rightSide) {
         this.rightSide = rightSide;
+    }
+
+    @Override
+    public String toString(){
+        return leftSide+ ":"+ rightSide;
     }
 
 }
