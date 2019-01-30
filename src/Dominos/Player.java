@@ -3,12 +3,12 @@ package Dominos;
 import java.util.*;
 
 public class Player {
-
+    private boolean comp;
 
     private List<Dominos> tray;
 
-    public Player(){
-
+    public Player(boolean comp){
+        comp = comp;
         tray = new LinkedList<>();
 
     }

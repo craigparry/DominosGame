@@ -9,6 +9,7 @@ public class MainGameLoop {
     private Player computer;
     private int turn;
     private GameState state;
+    private Board board;
 
     public MainGameLoop(){
         newGame();
@@ -17,11 +18,12 @@ public class MainGameLoop {
     public void newGame(){
         turn = 0;
         grave = new GraveYard();
+        board = new Board();
         /*initialize the player and computer trays*/
-        human = new Player();
+        human = new Player(false);
        // human.setTray(grave.initDraw(human.getTray()));
         grave.initDraw(human.getTray());
-        computer = new Player();
+        computer = new Player(true);
         grave.initDraw(computer.getTray());
 
         System.out.print("New Game: \n");
@@ -47,6 +49,10 @@ public class MainGameLoop {
         return human;
     }
 
+    public Board getBoard(){
+        return board;
+    }
+
     public static void main(String[] args) {
         // write your code here
 //        Dominos ex = new Dominos(2,7);
@@ -58,6 +64,10 @@ public class MainGameLoop {
         while(game.getState() != GameState.GAME_OVER){
             if(game.getTurn()%2 ==0){
                 //human turn
+                System.out.println("The board: ");
+                // print the left most and the right most and all of the pieces played.
+                game.getBoard().printBoard();
+
                 System.out.println("Player make your turn.");
                 System.out.print("Your tray: ");
                 game.getHuman().printTray();
@@ -71,6 +81,7 @@ public class MainGameLoop {
 
                 // loop while it is the computers turn, check every piece for a
                 // legal move, play the first legal move and change state to
+                //
             }
         }
 
