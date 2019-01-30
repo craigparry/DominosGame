@@ -25,5 +25,9 @@ public class GraveYard {
         }
     }
 
+    public Dominos draw(){
+        Collections.shuffle(grave);
+        return grave.remove(0);
+    }
 
 }
