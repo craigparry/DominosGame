@@ -34,5 +34,10 @@ public class Dominos {
     public String toString(){
         return leftSide+ ":"+ rightSide;
     }
+    public void flip(){
+        int hold = leftSide;
+        leftSide= rightSide;
+        rightSide= hold;
+    }
 
 }
