@@ -38,34 +38,41 @@ public class Player {
     }
 
 
-    public boolean matches(String next){
+    public Dominos matches(String next){
         boolean match = false;
         for(Dominos s: tray){
             match = s.toString().equals(next);
             if(match) {
-                return match;
+                return s;
             }
         }
-            return match;
+            return null;
     }
     public void playTurn(Board board, Player player){
         boolean left = false;
         boolean right = false;
+        Dominos piece;
 
         if(!comp) {
 
             String next;
             Scanner sc = new Scanner(System.in);
-            System.out.println("Player make your turn.");
+
             System.out.print("Your tray: ");
             player.printTray();
+            System.out.println("Player input your turn: ");
             next = sc.nextLine();
 
 
-
-            while(!matches(next)){
+            piece = matches(next);
+            while(piece ==null){
                 System.out.println("Input invalid use syntax: \"#:#\"");
                 next =sc.nextLine();
+                piece = matches(next);
+            }
+            if(board.isEmpty()){
+                board.add(piece);
+                return;
             }
             left = legalMoveLeft();
             right = legalMoveRight();

@@ -15,7 +15,8 @@ public class Board extends LinkedList<Dominos>{
             }
             System.out.println();
 
-            System.out.println("Left domino: " + this.getFirst() + "Right Domino: " + this.getLast());
+            System.out.println("Left domino: " + this.getFirst()
+                    + ", Right Domino: " + this.getLast());
         }
     }
 }

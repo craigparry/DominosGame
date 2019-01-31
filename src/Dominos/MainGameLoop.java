@@ -81,6 +81,7 @@ public class MainGameLoop {
 
 
                 game.incTurn();
+                game.getBoard().printBoard();
                 break;
             } else {
                 //computer turn
