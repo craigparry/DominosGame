@@ -5,10 +5,12 @@ public class Dominos {
     private int leftSide;
     private int rightSide;
     private static final int max = 6;
+    private DomPos position;
 
     public Dominos(int left, int right){
         this.leftSide = left;
         this.rightSide = right;
+        position = DomPos.NONE;
     }
 
     public static int getMax() {
@@ -45,4 +47,9 @@ public class Dominos {
 //           this.rightSide == passed.getLeftSide())
 //
 //    }
+
+    public enum DomPos {
+        TOP_ROW, BOT_ROW,NONE;
+    }
+
 }
