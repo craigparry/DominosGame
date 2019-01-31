@@ -42,7 +42,14 @@ public class Player {
         }
             return null;
     }
-    public void playTurn(Board board, Player player){
+
+    public boolean existLegal(Board board){
+
+
+        return false;
+    }
+
+    public boolean playTurn(Board board, Player player){
         boolean left = false;
         boolean right = false;
         Dominos piece;
@@ -54,6 +61,21 @@ public class Player {
 
             System.out.print("Your tray: ");
             player.printTray();
+
+            if(!existLegal(board) && !board.isEmpty()){
+                System.out.println("No legal moves enter \"yes\" to draw.");
+                next = sc.nextLine();
+                while(!next.equals("yes")){
+                    System.out.println("Dont make me tell you again \"yes\"!");
+                    next = sc.nextLine();
+                }
+
+                return false;
+
+
+
+            }
+
             System.out.println("Player input your turn: ");
             next = sc.nextLine();
 
@@ -64,17 +86,19 @@ public class Player {
                 next =sc.nextLine();
                 piece = matches(next);
             }
+
             if(board.isEmpty()){
                 board.add(piece);
-                return;
+                return true;
             }
+
             left = board.legalMoveLeft(piece);
             right = board.legalMoveRight(piece);
             if(left & right){
                 System.out.println("Play: \"left\" or \"right\"?");
                 next = sc.nextLine();
                 while(!next.equals("left") && !next.equals("right")){
-                    System.out.println("Mistyped, play: \"left\" or \"right\"?");
+                    System.out.println("Mis-typed, play: \"left\" or \"right\"?");
                     next = sc.nextLine();
                 }
 
@@ -82,15 +106,18 @@ public class Player {
             }
             if(left){
                board.placePiece("left", piece);
+               return true;
             } else if(right){
                 board.placePiece("right", piece);
+                return true;
             }else{
                 System.out.println("No legal play: pick another piece.");
-                playTurn(board,player);
+                return playTurn(board,player);
             }
 
         } else{
             computerMove();
+            return true;
         }
         // could place this in a legal move
         // for every piece in the tray check for a match

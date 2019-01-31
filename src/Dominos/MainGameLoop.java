@@ -58,6 +58,10 @@ public class MainGameLoop {
         return board;
     }
 
+    public GraveYard getGrave(){
+        return grave;
+    }
+
     public static void main(String[] args) {
         // write your code here
 //        Dominos ex = new Dominos(2,7);
@@ -76,8 +80,14 @@ public class MainGameLoop {
 
 
                 //game.getComputer().printTray();
+                boolean validTurn = false;
+                while(!validTurn){
+                    validTurn = game.getHuman().playTurn(game.getBoard(),game.getHuman());
+                    if(!validTurn){
+                        game.getHuman().getTray().add(game.getGrave().draw());
+                    }
+                }
 
-                game.getHuman().playTurn(game.getBoard(),game.getHuman());
 
 
                 game.incTurn();

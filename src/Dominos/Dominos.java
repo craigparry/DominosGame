@@ -1,6 +1,6 @@
 package Dominos;
 
-public class Dominos {
+public class Dominos{
 
     private int leftSide;
     private int rightSide;
