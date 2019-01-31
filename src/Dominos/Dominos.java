@@ -39,5 +39,10 @@ public class Dominos {
         leftSide= rightSide;
         rightSide= hold;
     }
-
+//    @Override
+//    public boolean equals(Dominos passed){
+//        if(this.leftSide == passed.getLeftSide() &&
+//           this.rightSide == passed.getLeftSide())
+//
+//    }
 }

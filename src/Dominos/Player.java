@@ -29,13 +29,7 @@ public class Player {
 
     }
 
-    public boolean legalMoveLeft(){
-        return false;
-    }
 
-    public boolean legalMoveRight(){
-        return false;
-    }
 
 
     public Dominos matches(String next){
@@ -74,16 +68,22 @@ public class Player {
                 board.add(piece);
                 return;
             }
-            left = legalMoveLeft();
-            right = legalMoveRight();
+            left = board.legalMoveLeft(piece);
+            right = board.legalMoveRight(piece);
             if(left & right){
                 System.out.println("Play: \"left\" or \"right\"?");
                 next = sc.nextLine();
+                while(!next.equals("left") && !next.equals("right")){
+                    System.out.println("Mistyped, play: \"left\" or \"right\"?");
+                    next = sc.nextLine();
+                }
+
+                board.placePiece(next, piece);
             }
             if(left){
-
+               board.placePiece("left", piece);
             } else if(right){
-
+                board.placePiece("right", piece);
             }else{
                 System.out.println("No legal play: pick another piece.");
                 playTurn(board,player);
