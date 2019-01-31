@@ -26,7 +26,8 @@ public class MainGameLoop {
         computer = new Player(true);
         grave.initDraw(computer.getTray());
 
-        System.out.print("New Game: \n"+ "When inputting dominos use syntax \"#:#\"\n");
+        System.out.print("New Game: \n"+ "When inputting dominos use syntax"
+                + " \"#:#\" as it appears in your tray\n");
     }
 
     public GameState getState(){
@@ -72,12 +73,11 @@ public class MainGameLoop {
                 // print the left most and the right most and all of the pieces played.
                 game.getBoard().printBoard();
 
-                System.out.println("Player make your turn.");
-                System.out.print("Your tray: ");
-                game.getHuman().printTray();
+
+
                 //game.getComputer().printTray();
 
-                game.getHuman().playTurn(game.getBoard());
+                game.getHuman().playTurn(game.getBoard(),game.getHuman());
 
 
                 game.incTurn();

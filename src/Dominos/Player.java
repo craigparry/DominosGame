@@ -29,27 +29,62 @@ public class Player {
 
     }
 
-    public void legalMove(Board board, String next){
-        for(Dominos s: tray){
-            // if the domino typed exists in the tray
-            if(s.toString().equals(next)){
-                // if the board is empty just place it
-                if(board.isEmpty()){
-                    board.add(s);
-                }
+    public boolean legalMoveLeft(){
+        return false;
+    }
 
-                // check first left
-                // check last righ and place the match
+    public boolean legalMoveRight(){
+        return false;
+    }
+
+
+    public boolean matches(String next){
+        boolean match = false;
+        for(Dominos s: tray){
+            match = s.toString().equals(next);
+            if(match) {
+                return match;
             }
         }
+            return match;
     }
-    public void playTurn(Board board){
-        String next;
-        Scanner sc = new Scanner(System.in);
-        next =sc.nextLine();
+    public void playTurn(Board board, Player player){
+        boolean left = false;
+        boolean right = false;
 
-        legalMove(board, next);
+        if(!comp) {
 
+            String next;
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Player make your turn.");
+            System.out.print("Your tray: ");
+            player.printTray();
+            next = sc.nextLine();
+
+
+
+            while(!matches(next)){
+                System.out.println("Input invalid use syntax: \"#:#\"");
+                next =sc.nextLine();
+            }
+            left = legalMoveLeft();
+            right = legalMoveRight();
+            if(left & right){
+                System.out.println("Play: \"left\" or \"right\"?");
+                next = sc.nextLine();
+            }
+            if(left){
+
+            } else if(right){
+
+            }else{
+                System.out.println("No legal play: pick another piece.");
+                playTurn(board,player);
+            }
+
+        } else{
+            computerMove();
+        }
         // could place this in a legal move
         // for every piece in the tray check for a match
         // if there is a map try to place it on the board.
@@ -57,5 +92,13 @@ public class Player {
         // if there are pieces check the first position leftSide
         // or the last position right side for a match
     }
+
+    /**
+     * implement esse
+     */
+    public void computerMove(){
+
+    }
+
 
 }
