@@ -36,10 +36,12 @@ public class Board extends LinkedList<Dominos>{
         }
         Dominos hold;
         hold = this.getFirst();
+        if(domino.getRightSide() ==0|| domino.getLeftSide() == 0){
+            return true;
+        }
 
         if(domino.getRightSide() == hold.getLeftSide()
             || domino.getLeftSide() == hold.getLeftSide()){
-
             return true;
         }
         return false;
@@ -49,12 +51,14 @@ public class Board extends LinkedList<Dominos>{
         if(this.isEmpty()){
             return true;
         }
+        if(domino.getRightSide() ==0|| domino.getLeftSide() == 0){
+            return true;
+        }
         Dominos hold;
         hold = this.getLast();
 
         if(domino.getRightSide() == hold.getRightSide()
                 || domino.getLeftSide() == hold.getRightSide()){
-
             return true;
         }
 
@@ -65,45 +69,18 @@ public class Board extends LinkedList<Dominos>{
         Dominos hold;
         if(pos.equals("left")){
             hold = this.getFirst();
-            if(hold.getLeftSide() != piece.getRightSide()){
+            if(hold.getLeftSide() != piece.getRightSide()
+                    && piece.getRightSide() !=0){
                 piece.flip();
             }
             this.addFirst(piece);
         }else{
             hold = this.getLast();
-            if(hold.getRightSide() != piece.getLeftSide()){
+            if(hold.getRightSide() != piece.getLeftSide()
+                    && piece.getLeftSide() !=0){
                 piece.flip();
             }
             this.addLast(piece);
         }
     }
-
-//    public void addFront(Dominos domino){
-//        if(this.isEmpty()){
-//            this.addFirst(domino);
-//            return;
-//        }
-//        int hold = this.getFirst().getLeftSide();
-//        if(domino.getRightSide() == hold){
-//            this.addFirst(domino);
-//        } else{
-//            domino.flip();
-//            this.addFirst(domino);
-//        }
-//
-//    }
-//
-//    public void addEnd(Dominos domino){
-//        if(this.isEmpty()){
-//            this.addLast(domino);
-//            return;
-//        }
-//        int hold = this.getFirst().getRightSide();
-//        if(domino.getLeftSide() == hold){
-//            this.addFirst(domino);
-//        } else{
-//            domino.flip();
-//            this.addFirst(domino);
-//        }
-//    }
 }

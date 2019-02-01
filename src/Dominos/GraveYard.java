@@ -5,11 +5,8 @@ import java.util.*;
 
 public class GraveYard extends LinkedList<Dominos> {
 
-//    private List<Dominos> grave;
-
     public GraveYard(){
         int max = Dominos.getMax();
-//        grave = new LinkedList<>();
         for(int i = 0; i<= max; i++){
             for(int k = 0; k <= max; k++){
                 this.add(new Dominos(i,k));
@@ -18,9 +15,6 @@ public class GraveYard extends LinkedList<Dominos> {
         }
     }
 
-//    public List<Dominos> getGraveYard(){
-//        return grave;
-//    }
     /** print function for testing
      * @param
      * @return void

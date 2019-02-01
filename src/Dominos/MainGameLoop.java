@@ -1,5 +1,5 @@
 package Dominos;
-
+import java.util.*;
 
 public class MainGameLoop {
     private GraveYard grave;
@@ -74,19 +74,13 @@ public class MainGameLoop {
         return getState();
     }
     public GameState gameOver(){
-        System.out.println(winner + "wins! Play again?");
+        System.out.println(winner + " wins!");
         return GameState.GAME_OVER;
     }
 
-    public static void main(String[] args) {
-        // write your code here
-//        Dominos ex = new Dominos(2,7);
-//        GraveYard examp = new GraveYard();
-//        examp.print();
-        MainGameLoop game = new MainGameLoop();
-
-//        loop for player turns
-        while(game.getState() != GameState.GAME_OVER){
+    public void playGame(){
+        // maybe put the game logic in main here
+        while(getState() != GameState.GAME_OVER){
             // need to write a game over method that will take into account
             // whose turn it is and who played the last piece
             /* check whos turn it is then call gameOver if they have a they have
@@ -96,66 +90,71 @@ public class MainGameLoop {
             and let the turn increment to next player and check for game over. If game is over
             break the main loop and set gamestate to game over.
              */
+            // might move the game logic in the main method into a method in main game loop
 
 
 
-            if(game.getTurn()%2 == 0){
-                game.setState(GameState.HUM_TURN);
+            if(getTurn()%2 == 0){
+                setState(GameState.HUM_TURN);
                 //human turn
 //                System.out.println("The board: ");
                 // print the left most and the right most and all of the pieces played.
-                game.getBoard().printBoard();
+                getBoard().printBoard();
 
 
 
                 //game.getComputer().printTray();
                 boolean validTurn = false;
                 while(!validTurn){
-                    validTurn = game.getHuman().playTurn(game.getBoard(),game.getHuman());
+                    validTurn = getHuman().playTurn(getBoard(),getHuman());
                     if(!validTurn){
                         //make sure graveyard is not empty then draw
-                        if(game.getGrave().isEmpty()){
+                        if(getGrave().isEmpty()){
                             // game over
-                            game.gameOver();
+                            if(gameOver() == GameState.GAME_OVER){
+                                return;
+                            }
                         }
                         //if grave yard is empty endgame other player wins
-                        game.getHuman().getTray().add(game.getGrave().draw());
+                        getHuman().getTray().add(getGrave().draw());
 
 
                     }
                 }
                 if(validTurn){
-                    game.setWinner(game.getHuman().toString());
+                    setWinner(getHuman().toString());
                 }
 
 
 
-                game.incTurn();
+                incTurn();
 //                game.getBoard().printBoard();
 //                break;
             } else {
                 //computer turn
 //                System.out.println("The board: ");
-                game.setState(GameState.CPU_TURN);
+                setState(GameState.CPU_TURN);
                 boolean validTurn = false;
                 System.out.print("Computer's turn: \n");
 
                 while(!validTurn){
-                    validTurn = game.getComputer().playTurn(game.getBoard(),game.getComputer());
+                    validTurn = getComputer().playTurn(getBoard(),getComputer());
                     // make sure graveyardd is not empty!!! then draw
                     if(!validTurn){
-                        if(game.getGrave().isEmpty()){
+                        if(getGrave().isEmpty()){
                             // game over
-                            game.gameOver();
+                            if(gameOver() == GameState.GAME_OVER){
+                                return;
+                            }
                         }
-                        game.getComputer().getTray().add(game.getGrave().draw());
+                        getComputer().getTray().add(getGrave().draw());
                     }
 
                 }
                 if(validTurn){
-                    game.setWinner(game.getComputer().toString());
+                    setWinner(getComputer().toString());
                 }
-                game.incTurn();
+                incTurn();
 
                 // loop while it is the computers turn, check every piece for a
                 // legal move, play the first legal move and change state to
@@ -163,5 +162,24 @@ public class MainGameLoop {
             }
         }
 
+    }
+
+    public static void main(String[] args) {
+        // write your code here
+//        Dominos ex = new Dominos(2,7);
+//        GraveYard examp = new GraveYard();
+//        examp.print();
+        String newGame;
+        MainGameLoop game = new MainGameLoop();
+
+       do{
+           game.playGame();
+           Scanner sc = new Scanner(System.in);
+           System.out.println("Play new game: \"yes\" or \"no\"");
+          do{
+              newGame = sc.nextLine();
+          }while(!newGame.equals("yes")&&!newGame.equals("no"));
+          if(newGame.equals("yes")) game.newGame();
+       }while(newGame.equals("yes"));
     }
 }
