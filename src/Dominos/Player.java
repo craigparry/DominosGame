@@ -1,4 +1,8 @@
-/**
+/** Craig Parry
+ * This file is used for the instances of player objects to be used in the
+ * domino game. This file should be used with GraveYard.java, Dominos.java,
+ * Player.java, DominosGUI.java, GameState.java, Board.java,
+ * and MainGameLoop.java
  *
  */
 
@@ -11,26 +15,28 @@ public class Player {
     private boolean comp;
     private List<Dominos> tray;
 
-    /**
+    /** Constructor for the player class that takes a boolean to define whether
+     * computer or human player
      *
      * @param comp
+     * @return void
      */
     public Player(boolean comp){
         this.comp = comp;
         tray = new LinkedList<>();
-
     }
 
-    /**
-     *
-     * @return
+    /** Getter for the players tray
+     * @param
+     * @return List<Dominos>
      */
     public List<Dominos> getTray() {
         return tray;
     }
 
-    /**
-     *
+    /** Prints the dominos held in the players tray
+     * @param
+     * @return void
      */
     public void printTray(){
         for(Dominos s: tray){
@@ -39,19 +45,12 @@ public class Player {
         System.out.println();
     }
 
-    /**
-     *
-     * @param newTray
-     */
-    public void setTray(List<Dominos> newTray){
-        tray = newTray;
-
-    }
-
-    /**
+    /** This method matches to String passed into the function to the string
+     * representation of the piece in in players tray and return that domino
+     * if it exists, null otherwise
      *
      * @param next
-     * @return
+     * @return Dominos
      */
     public Dominos matches(String next){
         boolean match;
@@ -61,14 +60,15 @@ public class Player {
                 return s;
             }
         }
-            return null;
+        return null;
     }
 
-    /**
+    /** This method checks if there is a domino in the players tray that can
+     * be played legally on the board.
      *
      * @param board
      * @param player
-     * @return
+     * @return boolean
      */
     public boolean existLegal(Board board, Player player){
         boolean legal =false;
@@ -86,11 +86,11 @@ public class Player {
         return legal;
     }
 
-    /**
+    /** This method plays a turn for the text based version of the game.
      *
      * @param board
      * @param player
-     * @return
+     * @return boolean
      */
     public boolean playTurn(Board board, Player player){
         boolean left = false;
@@ -178,11 +178,11 @@ public class Player {
         // or the last position right side for a match
     }
 
-    /**
+    /** This method makes a computerMove from their tray to the game board
      *
      * @param board
      * @param player
-     * @return
+     * @return boolean
      */
     public boolean computerMove(Board board, Player player){
 
@@ -211,7 +211,8 @@ public class Player {
         return false;
     }
 
-    /**
+    /** this method overrides toString to print out the string representation
+     *  of the Player
      *
      * @return
      */

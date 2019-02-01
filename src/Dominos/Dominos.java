@@ -48,7 +48,8 @@ public class Dominos{
         return rightSide;
     }
 
-    /** Writes the domino as a string left value : right value
+    /** This method ovverrites the toString method and writes the domino as a
+     * string left value : right value
      *
      * @return String
      */
