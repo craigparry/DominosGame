@@ -1,22 +1,37 @@
+/**
+ *
+ */
+
 package Dominos;
 
 import java.util.*;
 
 public class Player {
-    private boolean comp;
 
+    private boolean comp;
     private List<Dominos> tray;
 
+    /**
+     *
+     * @param comp
+     */
     public Player(boolean comp){
         this.comp = comp;
         tray = new LinkedList<>();
 
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Dominos> getTray() {
         return tray;
     }
 
+    /**
+     *
+     */
     public void printTray(){
         for(Dominos s: tray){
             System.out.print("["+s.toString()+"]"+" ");
@@ -24,14 +39,20 @@ public class Player {
         System.out.println();
     }
 
+    /**
+     *
+     * @param newTray
+     */
     public void setTray(List<Dominos> newTray){
         tray = newTray;
 
     }
 
-
-
-
+    /**
+     *
+     * @param next
+     * @return
+     */
     public Dominos matches(String next){
         boolean match;
         for(Dominos s: tray){
@@ -43,6 +64,12 @@ public class Player {
             return null;
     }
 
+    /**
+     *
+     * @param board
+     * @param player
+     * @return
+     */
     public boolean existLegal(Board board, Player player){
         boolean legal =false;
         for(Dominos s: player.getTray()){
@@ -59,6 +86,12 @@ public class Player {
         return legal;
     }
 
+    /**
+     *
+     * @param board
+     * @param player
+     * @return
+     */
     public boolean playTurn(Board board, Player player){
         boolean left = false;
         boolean right = false;
@@ -75,6 +108,7 @@ public class Player {
             if(!existLegal(board, player) && !board.isEmpty()){
                 System.out.println("No legal moves enter \"yes\" to draw.");
                 next = sc.nextLine();
+
                 while(!next.equals("yes")){
                     System.out.println("Dont make me tell you again \"yes\"!");
                     next = sc.nextLine();
@@ -145,7 +179,10 @@ public class Player {
     }
 
     /**
-     * implement esse
+     *
+     * @param board
+     * @param player
+     * @return
      */
     public boolean computerMove(Board board, Player player){
 
@@ -173,6 +210,11 @@ public class Player {
         }
         return false;
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString(){
         if(comp){

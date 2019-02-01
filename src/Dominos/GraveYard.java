@@ -1,10 +1,18 @@
+/** Craig Parry
+ * This file is used to create a Garveyard for the DominosGame that holds the
+ * reserve of dominos for the players to draw from. This file needs to run with
+ * Dominos.java, Player.java, DominosGUI.java, GameState.java, Board.java,
+ * and MainGameLoop.java
+ *
+ */
 package Dominos;
-
 import java.util.*;
-
 
 public class GraveYard extends LinkedList<Dominos> {
 
+    /** Constructor for the GraveYard class
+     *
+     */
     public GraveYard(){
         int max = Dominos.getMax();
         for(int i = 0; i<= max; i++){
@@ -15,7 +23,7 @@ public class GraveYard extends LinkedList<Dominos> {
         }
     }
 
-    /** print function for testing
+    /** print function for testing the graveyard
      * @param
      * @return void
      */
@@ -37,6 +45,7 @@ public class GraveYard extends LinkedList<Dominos> {
         }
         return tray;
     }
+
     /** Draws a random domino tile from the the graveyard assuming that there are
      * dominos remaining in the graveyard.
      *

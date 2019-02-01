@@ -1,3 +1,10 @@
+/**Craig Parry
+ * This file is used to start and instaniate the MainGameLoop of the Domino game
+ * This file needs to be run with the Board.java, GraveYard.java, Dominos.java,
+ * Player.java, GameState.java and DominosGUI.java
+ *
+ */
+
 package Dominos;
 import java.util.*;
 
@@ -10,10 +17,17 @@ public class MainGameLoop {
     private Board board;
     private String winner;
 
+    /** Constructor for the MainGameLoop
+     *
+     */
     public MainGameLoop(){
         newGame();
     }
 
+    /** New game method initializes the memeber variables of the class and
+     * sets all member integers to zero and String to default
+     *
+     */
     public void newGame(){
         turn = 0;
         state = GameState.NEW_GAME;
@@ -30,54 +44,97 @@ public class MainGameLoop {
                 + " \"#:#\" as it appears in your tray\n");
     }
 
+    /**
+     *
+     * @return
+     */
     public GameState getState(){
         return state;
     }
 
+    /**
+     *
+     * @param newState
+     */
     public void setState(GameState newState){
         state = newState;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTurn(){
         return turn;
     }
 
+    /**
+     *
+     */
     public void incTurn(){
         turn++;
     }
 
+    /**
+     *
+     * @return
+     */
     public Player getHuman(){
         return human;
     }
 
+    /**
+     *
+     * @return
+     */
     public Player getComputer(){
         return computer;
     }
 
+    /**
+     *
+     * @return
+     */
     public Board getBoard(){
         return board;
     }
 
+    /**
+     *
+     * @return
+     */
     public GraveYard getGrave(){
         return grave;
     }
+
+    /**
+     *
+     * @param who
+     */
     public void setWinner(String who){
         winner = who;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getWinner(){
         return winner;
     }
 
-    public GameState gameOver(Board board, Player player, GraveYard grave){
-
-
-        return getState();
-    }
+    /**
+     *
+     * @return
+     */
     public GameState gameOver(){
         System.out.println(winner + " wins!");
         return GameState.GAME_OVER;
     }
 
+    /**
+     *
+     */
     public void playGame(){
         // maybe put the game logic in main here
         while(getState() != GameState.GAME_OVER){
@@ -148,6 +205,7 @@ public class MainGameLoop {
                             }
                         }
                         getComputer().getTray().add(getGrave().draw());
+                        System.out.println("Computer drew");
                     }
 
                 }
