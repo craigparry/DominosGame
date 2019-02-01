@@ -91,12 +91,20 @@ public class MainGameLoop {
 
 
                 game.incTurn();
-                game.getBoard().printBoard();
-                break;
+//                game.getBoard().printBoard();
+//                break;
             } else {
                 //computer turn
-
+                System.out.println("The board: ");
+                boolean validTurn = false;
                 System.out.print("Computer's turn: \n");
+
+                while(!validTurn){
+                    validTurn = game.getComputer().playTurn(game.getBoard(),game.getComputer());
+                    game.getComputer().getTray().add(game.getGrave().draw());
+                }
+
+                game.incTurn();
 
                 // loop while it is the computers turn, check every piece for a
                 // legal move, play the first legal move and change state to

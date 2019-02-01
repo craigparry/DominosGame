@@ -8,7 +8,7 @@ public class Player {
     private List<Dominos> tray;
 
     public Player(boolean comp){
-        comp = comp;
+        this.comp = comp;
         tray = new LinkedList<>();
 
     }
@@ -19,7 +19,7 @@ public class Player {
 
     public void printTray(){
         for(Dominos s: tray){
-            System.out.print(s.toString()+", ");
+            System.out.print("["+s.toString()+"]"+" ");
         }
         System.out.println();
     }
@@ -43,10 +43,20 @@ public class Player {
             return null;
     }
 
-    public boolean existLegal(Board board){
+    public boolean existLegal(Board board, Player player){
+        boolean legal =false;
+        for(Dominos s: player.getTray()){
+            legal =board.legalMoveLeft(s);
+            if(legal){
+                return legal;
+            }
+            legal =board.legalMoveRight(s);
+            if(legal){
+                return legal;
+            }
+        }
 
-
-        return false;
+        return legal;
     }
 
     public boolean playTurn(Board board, Player player){
@@ -62,18 +72,15 @@ public class Player {
             System.out.print("Your tray: ");
             player.printTray();
 
-            if(!existLegal(board) && !board.isEmpty()){
+            if(!existLegal(board, player) && !board.isEmpty()){
                 System.out.println("No legal moves enter \"yes\" to draw.");
                 next = sc.nextLine();
                 while(!next.equals("yes")){
                     System.out.println("Dont make me tell you again \"yes\"!");
                     next = sc.nextLine();
                 }
-
+               // sc.close();
                 return false;
-
-
-
             }
 
             System.out.println("Player input your turn: ");
@@ -88,7 +95,9 @@ public class Player {
             }
 
             if(board.isEmpty()){
-                board.add(piece);
+                board.addFirst(piece);
+                player.getTray().remove(piece);
+//                sc.close();
                 return true;
             }
 
@@ -103,21 +112,28 @@ public class Player {
                 }
 
                 board.placePiece(next, piece);
+                player.getTray().remove(piece);
             }
             if(left){
                board.placePiece("left", piece);
+               player.getTray().remove(piece);
+//               sc.close();
                return true;
             } else if(right){
                 board.placePiece("right", piece);
+                player.getTray().remove(piece);
+//                sc.close();
                 return true;
             }else{
                 System.out.println("No legal play: pick another piece.");
+//                sc.close();
                 return playTurn(board,player);
             }
 
         } else{
-            computerMove();
-            return true;
+
+            return computerMove(board, player);
+
         }
         // could place this in a legal move
         // for every piece in the tray check for a match
@@ -130,8 +146,31 @@ public class Player {
     /**
      * implement esse
      */
-    public void computerMove(){
+    public boolean computerMove(Board board, Player player){
 
+        if(!existLegal(board, player)){
+            return false;
+        }
+
+        Dominos piece = null;
+        for(Dominos s: player.getTray()){
+            if(board.legalMoveLeft(s)){
+                board.placePiece("left",s);
+                piece = s;
+                break;
+            }
+            if(board.legalMoveRight(s)){
+                board.placePiece("right",s);
+                piece = s;
+                break;
+            }
+        }
+        if(piece != null){
+            System.out.println("Computer played: "+ piece.toString());
+            player.getTray().remove(piece);
+            return true;
+        }
+        return false;
     }
 
 
