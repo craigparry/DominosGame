@@ -20,17 +20,17 @@ public class Dominos{
         return leftSide;
     }
 
-    public void setLeftSide(int leftSide) {
-        this.leftSide = leftSide;
-    }
+//    public void setLeftSide(int leftSide) {
+//        this.leftSide = leftSide;
+//    }
 
     public int getRightSide() {
         return rightSide;
     }
 
-    public void setRightSide(int rightSide) {
-        this.rightSide = rightSide;
-    }
+//    public void setRightSide(int rightSide) {
+//        this.rightSide = rightSide;
+//    }
 
     @Override
     public String toString(){

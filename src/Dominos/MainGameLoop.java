@@ -73,7 +73,7 @@ public class MainGameLoop {
         while(game.getState() != GameState.GAME_OVER){
             if(game.getTurn()%2 ==0){
                 //human turn
-                System.out.println("The board: ");
+//                System.out.println("The board: ");
                 // print the left most and the right most and all of the pieces played.
                 game.getBoard().printBoard();
 
@@ -95,7 +95,7 @@ public class MainGameLoop {
 //                break;
             } else {
                 //computer turn
-                System.out.println("The board: ");
+//                System.out.println("The board: ");
                 boolean validTurn = false;
                 System.out.print("Computer's turn: \n");
 

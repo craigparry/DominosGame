@@ -33,7 +33,7 @@ public class Player {
 
 
     public Dominos matches(String next){
-        boolean match = false;
+        boolean match;
         for(Dominos s: tray){
             match = s.toString().equals(next);
             if(match) {
@@ -79,7 +79,7 @@ public class Player {
                     System.out.println("Dont make me tell you again \"yes\"!");
                     next = sc.nextLine();
                 }
-               // sc.close();
+//                sc.close();
                 return false;
             }
 
@@ -113,6 +113,7 @@ public class Player {
 
                 board.placePiece(next, piece);
                 player.getTray().remove(piece);
+                return true;
             }
             if(left){
                board.placePiece("left", piece);
