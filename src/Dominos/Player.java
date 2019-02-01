@@ -213,8 +213,8 @@ public class Player {
 
     /** this method overrides toString to print out the string representation
      *  of the Player
-     *
-     * @return
+     * @param
+     * @return String
      */
     @Override
     public String toString(){
