@@ -1,8 +1,6 @@
 package Dominos;
 
 
-
-
 public class MainGameLoop {
     private GraveYard grave;
     private Player human;
@@ -10,6 +8,7 @@ public class MainGameLoop {
     private int turn;
     private GameState state;
     private Board board;
+    private String winner;
 
     public MainGameLoop(){
         newGame();
@@ -17,6 +16,7 @@ public class MainGameLoop {
 
     public void newGame(){
         turn = 0;
+        state = GameState.NEW_GAME;
         grave = new GraveYard();
         board = new Board();
         /*initialize the player and computer trays*/
@@ -61,6 +61,22 @@ public class MainGameLoop {
     public GraveYard getGrave(){
         return grave;
     }
+    public void setWinner(String who){
+        winner = who;
+    }
+    public String getWinner(){
+        return winner;
+    }
+
+    public GameState gameOver(Board board, Player player, GraveYard grave){
+
+
+        return getState();
+    }
+    public GameState gameOver(){
+        System.out.println(winner + "wins! Play again?");
+        return GameState.GAME_OVER;
+    }
 
     public static void main(String[] args) {
         // write your code here
@@ -71,7 +87,20 @@ public class MainGameLoop {
 
 //        loop for player turns
         while(game.getState() != GameState.GAME_OVER){
-            if(game.getTurn()%2 ==0){
+            // need to write a game over method that will take into account
+            // whose turn it is and who played the last piece
+            /* check whos turn it is then call gameOver if they have a they have
+            a legal move and grave yard no, if they dont have a legal move is graveyard empty
+            if no not over, if they dont have a legal move and the graveyard is not empty then
+            yes. if the player is asked to draw on an empty graveyard then break the draw loop
+            and let the turn increment to next player and check for game over. If game is over
+            break the main loop and set gamestate to game over.
+             */
+
+
+
+            if(game.getTurn()%2 == 0){
+                game.setState(GameState.HUM_TURN);
                 //human turn
 //                System.out.println("The board: ");
                 // print the left most and the right most and all of the pieces played.
@@ -84,8 +113,19 @@ public class MainGameLoop {
                 while(!validTurn){
                     validTurn = game.getHuman().playTurn(game.getBoard(),game.getHuman());
                     if(!validTurn){
+                        //make sure graveyard is not empty then draw
+                        if(game.getGrave().isEmpty()){
+                            // game over
+                            game.gameOver();
+                        }
+                        //if grave yard is empty endgame other player wins
                         game.getHuman().getTray().add(game.getGrave().draw());
+
+
                     }
+                }
+                if(validTurn){
+                    game.setWinner(game.getHuman().toString());
                 }
 
 
@@ -96,14 +136,25 @@ public class MainGameLoop {
             } else {
                 //computer turn
 //                System.out.println("The board: ");
+                game.setState(GameState.CPU_TURN);
                 boolean validTurn = false;
                 System.out.print("Computer's turn: \n");
 
                 while(!validTurn){
                     validTurn = game.getComputer().playTurn(game.getBoard(),game.getComputer());
-                    game.getComputer().getTray().add(game.getGrave().draw());
-                }
+                    // make sure graveyardd is not empty!!! then draw
+                    if(!validTurn){
+                        if(game.getGrave().isEmpty()){
+                            // game over
+                            game.gameOver();
+                        }
+                        game.getComputer().getTray().add(game.getGrave().draw());
+                    }
 
+                }
+                if(validTurn){
+                    game.setWinner(game.getComputer().toString());
+                }
                 game.incTurn();
 
                 // loop while it is the computers turn, check every piece for a

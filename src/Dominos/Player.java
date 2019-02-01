@@ -173,6 +173,10 @@ public class Player {
         }
         return false;
     }
-
-
+    @Override
+    public String toString(){
+        if(comp){
+            return "Computer";
+        } else return "Player";
+    }
 }

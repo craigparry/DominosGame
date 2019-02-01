@@ -3,27 +3,30 @@ package Dominos;
 import java.util.*;
 
 
-public class GraveYard {
+public class GraveYard extends LinkedList<Dominos> {
 
-    private List<Dominos> grave;
+//    private List<Dominos> grave;
 
     public GraveYard(){
         int max = Dominos.getMax();
-        grave = new LinkedList<>();
+//        grave = new LinkedList<>();
         for(int i = 0; i<= max; i++){
             for(int k = 0; k <= max; k++){
-                grave.add(new Dominos(i,k));
+                this.add(new Dominos(i,k));
             }
 
         }
     }
 
+//    public List<Dominos> getGraveYard(){
+//        return grave;
+//    }
     /** print function for testing
-     * @param none
+     * @param
      * @return void
      */
     public void print(){
-        for(Dominos s: grave){
+        for(Dominos s: this){
             System.out.print(s.toString()+ ", ");
 
         }
@@ -46,8 +49,8 @@ public class GraveYard {
      * @return Dominos
      */
     public Dominos draw(){
-        Collections.shuffle(grave);
-        return grave.remove(0);
+        Collections.shuffle(this);
+        return this.remove(0);
     }
 
 }
