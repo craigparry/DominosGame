@@ -128,6 +128,9 @@ public class MainGameLoop {
      * @return
      */
     public GameState gameOver(){
+
+        /// check for legal move for player and for computer
+
         System.out.println(winner + " wins!");
         return GameState.GAME_OVER;
     }
@@ -164,29 +167,25 @@ public class MainGameLoop {
                 boolean validTurn = false;
                 while(!validTurn){
                     validTurn = getHuman().playTurn(getBoard(),getHuman());
-                    if(!validTurn){
-                        //make sure graveyard is not empty then draw
-                        if(getGrave().isEmpty()){
-                            // game over
-                            if(gameOver() == GameState.GAME_OVER){
-                                return;
-                            }
-                        }
-                        //if grave yard is empty endgame other player wins
-                        getHuman().getTray().add(getGrave().draw());
 
-
+                    if(validTurn){
+                        setWinner(getHuman().toString());
                     }
+
+                    if(!validTurn && getGrave().isEmpty()){
+                        System.out.println("No Move and Grave Empty.");
+                        if(!computer.existLegal(board,computer)&& !human.existLegal(board,human)){
+                            setState(GameState.GAME_OVER);
+
+                        }
+                        break;
+                    }
+
+                        if(!validTurn && !getGrave().isEmpty()) {
+                            getHuman().getTray().add(getGrave().draw());
+                        }
                 }
-                if(validTurn){
-                    setWinner(getHuman().toString());
-                }
-
-
-
                 incTurn();
-//                game.getBoard().printBoard();
-//                break;
             } else {
                 //computer turn
 //                System.out.println("The board: ");
@@ -197,20 +196,27 @@ public class MainGameLoop {
                 while(!validTurn){
                     validTurn = getComputer().playTurn(getBoard(),getComputer());
                     // make sure graveyardd is not empty!!! then draw
-                    if(!validTurn){
-                        if(getGrave().isEmpty()){
+                    if(validTurn){
+                        setWinner(getComputer().toString());
+                    }
+
+                    // need two conditions if !validTurn and getGrave().isEmpty()
+                    // and !validTurn and !getGrave().isEmpty()
+
+                    if(!validTurn && getGrave().isEmpty()){
+
                             // game over
-                            if(gameOver() == GameState.GAME_OVER){
-                                return;
-                            }
+                            // set to game over if no moves left else
+                        if(!computer.existLegal(board,computer)&& !human.existLegal(board,human)){
+                            setState(GameState.GAME_OVER);
+
                         }
+                        break;
+                    }
+                    if(!validTurn && !getGrave().isEmpty()){
                         getComputer().getTray().add(getGrave().draw());
                         System.out.println("Computer drew");
                     }
-
-                }
-                if(validTurn){
-                    setWinner(getComputer().toString());
                 }
                 incTurn();
 
@@ -219,7 +225,11 @@ public class MainGameLoop {
                 //
             }
         }
-
+    gameOver();
+        System.out.println("Player tray");
+        human.printTray();
+        System.out.println("Computer tray");
+        computer.printTray();
     }
 
     public static void main(String[] args) {
