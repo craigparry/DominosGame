@@ -1,4 +1,7 @@
-/**
+/** Craig Parry
+ * This file is uses as the gameboard for the Dominos game and should be used
+ * with the MainGameLoop.java, DominosGUI.java, Player.java, Dominos.java,
+ * GraveYard.java, and GameState.java
  *
  */
 package Dominos;
@@ -6,8 +9,10 @@ package Dominos;
 import java.util.*;
 
 public class Board extends LinkedList<Dominos>{
-    /**
-     *
+    /** prints the gameboards content in two rows spacing the bottom row by half
+     * a domino tile to match the numbers that have been played correctly
+     * @param none
+     * @return void
      */
     public void printBoard(){
         if(this.isEmpty()){
@@ -35,10 +40,10 @@ public class Board extends LinkedList<Dominos>{
         }
     }
 
-    /**
-     *
+    /** This method checks for a legal move on the left side of the playing board
+     * and returns a boolean if a legal move exists
      * @param domino
-     * @return
+     * @return boolean
      */
     public boolean legalMoveLeft(Dominos domino){
         if(this.isEmpty()){
@@ -58,10 +63,10 @@ public class Board extends LinkedList<Dominos>{
         return false;
     }
 
-    /**
-     *
+    /** This method checks for a legal move on the right side of the playing board
+     * and returns a boolean if a legal move exists
      * @param domino
-     * @return
+     * @return boolean
      */
     public boolean legalMoveRight(Dominos domino){
         if(this.isEmpty()){
@@ -84,7 +89,9 @@ public class Board extends LinkedList<Dominos>{
         return false;
     }
 
-    /**
+    /** This method places a piece on the board to the left or the right side
+     * based on the String representation of the position specified on the
+     * gameboard. Assumes that a legal move exists at that position
      *
      * @param pos
      * @param piece

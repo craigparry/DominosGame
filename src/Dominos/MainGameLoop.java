@@ -44,101 +44,112 @@ public class MainGameLoop {
                 + " \"#:#\" as it appears in your tray\n");
     }
 
-    /**
-     *
-     * @return
+    /** Getter for the gameState
+     * @param none
+     * @return GameState
      */
     public GameState getState(){
         return state;
     }
 
-    /**
+    /** sets the state of the game
      *
      * @param newState
+     * @return void
      */
     public void setState(GameState newState){
         state = newState;
     }
 
-    /**
+    /** getter for the games turn
      *
-     * @return
+     * @param none
+     * @return int
      */
     public int getTurn(){
         return turn;
     }
 
-    /**
+    /** increments the turn for the game
+     * @param none
+     * @return void
      *
      */
     public void incTurn(){
         turn++;
     }
 
-    /**
+    /** gets the Player: human
      *
-     * @return
+     * @param none
+     * @return Player
      */
     public Player getHuman(){
         return human;
     }
 
-    /**
-     *
-     * @return
+    /** gets the Player: computer
+     * @param none
+     * @return Player
      */
     public Player getComputer(){
         return computer;
     }
 
-    /**
-     *
-     * @return
+    /** gets the board for the game
+     * @param none
+     * @return Board
      */
     public Board getBoard(){
         return board;
     }
 
-    /**
-     *
-     * @return
+    /** gets the grveyard for the game
+     * @param none
+     * @return GraveYard
      */
     public GraveYard getGrave(){
         return grave;
     }
 
-    /**
+    /** Sets the winner for the game
      *
      * @param who
+     * @return void
      */
     public void setWinner(String who){
         winner = who;
     }
 
-    /**
-     *
-     * @return
+    /** gets the winner of the game
+     * @param none
+     * @return String
      */
     public String getWinner(){
         return winner;
     }
 
-    /**
-     *
-     * @return
+    /** gets the gameOver state and returns a message of gameover to the console
+     * @param none
+     * @return GameState
      */
     public GameState gameOver(){
 
         /// check for legal move for player and for computer
 
-        System.out.println(winner + " wins!");
+        System.out.println(getWinner() + " wins!");
         return GameState.GAME_OVER;
     }
 
-    /**
+    /** Plays a text based version of the dominos game on the console
+     * with a computer player. It gives instructions for input for the console
+     * commands of playing a piece or drawing from the graveyard and gives a
+     * visual representation of the board.
      *
+     * @param none
+     * @return void
      */
-    public void playGame(){
+    public void playTextGame(){
         // maybe put the game logic in main here
         while(getState() != GameState.GAME_OVER){
             // need to write a game over method that will take into account
@@ -241,7 +252,7 @@ public class MainGameLoop {
         MainGameLoop game = new MainGameLoop();
 
        do{
-           game.playGame();
+           game.playTextGame();
            Scanner sc = new Scanner(System.in);
            System.out.println("Play new game: \"yes\" or \"no\"");
           do{
