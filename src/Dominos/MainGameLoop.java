@@ -36,12 +36,8 @@ public class MainGameLoop {
         /*initialize the player and computer trays*/
         human = new Player(false);
        // human.setTray(grave.initDraw(human.getTray()));
-        grave.initDraw(human.getTray());
         computer = new Player(true);
-        grave.initDraw(computer.getTray());
 
-        System.out.print("New Game: \n"+ "When inputting dominos use syntax"
-                + " \"#:#\" as it appears in your tray\n");
     }
 
     /** Getter for the gameState
@@ -150,6 +146,12 @@ public class MainGameLoop {
      * @return void
      */
     public void playTextGame(){
+        grave.initDraw(computer.getTray());
+        grave.initDraw(human.getTray());
+        System.out.print("New Game: \n"+ "When inputting dominos use syntax"
+                + " \"#:#\" as it appears in your tray\n");
+
+
         // maybe put the game logic in main here
         while(getState() != GameState.GAME_OVER){
             // need to write a game over method that will take into account
