@@ -34,6 +34,10 @@ public class Player {
         return tray;
     }
 
+    public void setTray(List<Dominos> newTray){
+        tray = newTray;
+    }
+
     /** Prints the dominos held in the players tray
      * @param
      * @return void
