@@ -139,6 +139,7 @@ public class DominosGUI extends Application{
                         + event . getX () + " " + event . getY ());
                 System.out.println(s.toString());
                 //play move and put into game board at this point
+
                 gameTray.getChildren().remove(temp);
 
             });
