@@ -41,7 +41,7 @@ public class MainGameLoop {
     }
 
     /** Getter for the gameState
-     * @param none
+     * @param
      * @return GameState
      */
     public GameState getState(){
@@ -59,7 +59,7 @@ public class MainGameLoop {
 
     /** getter for the games turn
      *
-     * @param none
+     * @param
      * @return int
      */
     public int getTurn(){
@@ -67,7 +67,7 @@ public class MainGameLoop {
     }
 
     /** increments the turn for the game
-     * @param none
+     * @param
      * @return void
      *
      */
@@ -77,7 +77,7 @@ public class MainGameLoop {
 
     /** gets the Player: human
      *
-     * @param none
+     * @param
      * @return Player
      */
     public Player getHuman(){
@@ -85,7 +85,7 @@ public class MainGameLoop {
     }
 
     /** gets the Player: computer
-     * @param none
+     * @param
      * @return Player
      */
     public Player getComputer(){
@@ -93,7 +93,7 @@ public class MainGameLoop {
     }
 
     /** gets the board for the game
-     * @param none
+     * @param
      * @return Board
      */
     public Board getBoard(){
@@ -101,7 +101,7 @@ public class MainGameLoop {
     }
 
     /** gets the grveyard for the game
-     * @param none
+     * @param
      * @return GraveYard
      */
     public GraveYard getGrave(){
@@ -118,7 +118,7 @@ public class MainGameLoop {
     }
 
     /** gets the winner of the game
-     * @param none
+     * @param
      * @return String
      */
     public String getWinner(){
@@ -126,7 +126,7 @@ public class MainGameLoop {
     }
 
     /** gets the gameOver state and returns a message of gameover to the console
-     * @param none
+     * @param
      * @return GameState
      */
     public GameState gameOver(){
@@ -142,7 +142,7 @@ public class MainGameLoop {
      * commands of playing a piece or drawing from the graveyard and gives a
      * visual representation of the board.
      *
-     * @param none
+     * @param
      * @return void
      */
     public void playTextGame(){
@@ -248,8 +248,30 @@ public class MainGameLoop {
     /*need to make a method that will play the turn from the GUI and update the
     * state of the gameboard, player tray if the domino is clicked and has a legal
     * move*/
-    public void playTurnGUI(Dominos domino){
+    public boolean playTurnGUI(Dominos domino, Player player){
+        if(getBoard().isEmpty()){
+            getBoard().add(domino);
+            player.getTray().remove(domino);
+            return true;
+        }
 
+        if(getBoard().legalMoveLeft(domino)&&getBoard().legalMoveRight(domino)){
+
+
+        }
+
+        if(getBoard().legalMoveRight(domino)){
+            board.placePiece("right",domino);
+            player.getTray().remove(domino);
+            return true;
+        }
+
+        if(getBoard().legalMoveLeft(domino)){
+            board.placePiece("left",domino);
+            player.getTray().remove(domino);
+            return true;
+        }
+        return false;
     }
 
 
