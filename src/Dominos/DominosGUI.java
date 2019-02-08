@@ -8,12 +8,11 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.*;
-//import javafx.scene.layout.VBox;
+
 import javafx.scene.control.*;
-import java.util.*;
+
 import javafx.scene.input.MouseEvent;
-import java.time.Duration;
-import javafx.animation.AnimationTimer;
+
 import javafx.scene.control.ScrollPane;
 
 
@@ -261,8 +260,6 @@ public class DominosGUI extends Application{
         });
 
 
-
-
         rightButton.setDisable(true);
         leftButton.setDisable(true);
         resetButton.setDisable(true);
@@ -279,11 +276,7 @@ public class DominosGUI extends Application{
         }
 
 
-
-
       //  vbox.getChildren().addAll(new Label("This is a "), new Button("is"), new Button("going"),drawDomino(1));
-
-
 
 
         vbox.getChildren().addAll(topRow,botRow);
@@ -296,38 +289,6 @@ public class DominosGUI extends Application{
 
         stage.setScene(new Scene(new StackPane(screen)));
         stage.show();
-
-
-
-
-//        AnimationTimer a = new AnimationTimer () {
-//            private long startTime = -1;
-//            @Override
-//            public void handle ( long now ) {
-//                if ( startTime < 0) {
-//                    startTime = now;
-//                }
-//
-//
-////                for(Dominos d: game.getBoard()){
-////                    HBox temp = new HBox();
-////                    temp.getChildren().addAll(drawDomino(d.getLeftSide()),drawDomino(d.getRightSide()));
-////                    gameTray.getChildren().add(temp);
-////
-////                }
-////                gameTray.getChildren().clear();
-////                for(Dominos s: game.getHuman().getTray()){
-////                    gameTray.getChildren().add(dominoMap.get(s.toString()));
-////                }
-//
-//
-////                Duration elapsed = Duration . ofNanos (now - startTime );
-////                text . setText ( String . format (" elapsed time %2d :%02 d",
-////                        elapsed . toMinutesPart () ,
-////                        elapsed . toSecondsPart ());
-//            }
-//        };
-//        a. start ();
 
     }
 
