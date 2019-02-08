@@ -11,11 +11,11 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ScrollPane;
-
+//import javafx.scene.control.Dialogs;
+import javafx.scene.control.Alert.*;
 
 public class DominosGUI extends Application{
-    private Canvas canvas;
-    private GraphicsContext gc;
+
     private MainGameLoop game = new MainGameLoop();
     private BorderPane screen;
     private VBox vbox;
@@ -128,10 +128,29 @@ public class DominosGUI extends Application{
                 botRow.getChildren().add(temp);
             }
         }
+
+        if(game.getGrave().isEmpty() && game.getComputer().existLegal(game.getBoard(),game.getComputer()) && !game.getHuman().existLegal(game.getBoard(),game.getHuman())){
+            boolean compLegal = game.getComputer().computerMove(game.getBoard(),game.getComputer(),game.getGrave());
+            if(compLegal){
+                game.setWinner("Computer");
+            }
+            updateBoard();
+        }
+
         if(game.getGrave().isEmpty() && !game.getHuman().existLegal(game.getBoard(),game.getHuman()) && !game.getComputer().existLegal(game.getBoard(),game.getComputer())){
             resetButton.setDisable(false);
+//            Dialogs.showInformationDialog(stage, "I have a great message for you!",
+//                    "Information Dialog", "title");
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Winner, winner, chicken dinner!");
+            alert.setHeaderText(null);
+            alert.setContentText("The winner is "+ game.getWinner()+" player!");
+
+            alert.showAndWait();
         }
     }
+
+
     public void addGameTray(Dominos domino){
         HBox temp = new HBox();
         temp.getChildren().addAll(drawDomino(domino.getLeftSide()),drawDomino(domino.getRightSide()));
@@ -201,7 +220,12 @@ public class DominosGUI extends Application{
         scrollPane.setFitToWidth(true);
 
 
-
+//        Alert alert = new Alert(AlertType.INFORMATION);
+//        alert.setTitle("Information Dialog");
+//        alert.setHeaderText(null);
+//        alert.setContentText("The winner is"+game.getWinner()+"!");
+//
+//        alert.showAndWait();
 
 
 
