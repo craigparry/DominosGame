@@ -1,5 +1,6 @@
 package Dominos;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.*;
 import javafx.scene.paint.*;
@@ -13,6 +14,9 @@ import java.util.*;
 import javafx.scene.input.MouseEvent;
 import java.time.Duration;
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.ScrollPane;
+
+import javax.swing.*;
 
 public class DominosGUI extends Application{
     private Canvas canvas;
@@ -82,8 +86,45 @@ public class DominosGUI extends Application{
         stage.setTitle("Domino Game");
         BorderPane screen = new BorderPane();
         VBox vbox = new VBox(1);
+        vbox.setBackground(new Background(new BackgroundFill(Color.GREEN,null,null)));
+
+        vbox.setPadding(new Insets(20,0,20,0));
+
+
+
+
         HBox topRow = new HBox(1);
+
+        topRow.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET,null,null)));
+        topRow.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
+
+
         HBox botRow = new HBox(1);
+
+        botRow.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET,null,null)));
+        botRow.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
+        botRow.setPrefHeight(40);
+        topRow.setPrefHeight(40);
+//        BorderPane gamePane = new BorderPane();
+//        BorderPane.setAlignment(topRow,Pos.TOP_CENTER);
+//        BorderPane.setAlignment(botRow,Pos.BOTTOM_CENTER);
+//        gamePane.setTop(topRow);
+//        gamePane.setBottom(botRow);
+        ScrollPane scrollPane = new ScrollPane();
+
+
+        scrollPane.setContent(vbox);
+        scrollPane.setPrefSize(vbox.getWidth(),vbox.getHeight());
+        scrollPane.setMinHeight(140);
+        scrollPane.setMinWidth(100);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+
+
+
+
+
 //        HBox bigDomino = new HBox();
 
 
@@ -123,7 +164,18 @@ public class DominosGUI extends Application{
 //        DominoMap.put("0:0",temp);
 
         HBox gameTray = new HBox(2);
+        gameTray.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET,null,null)));
+        gameTray.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
+        gameTray.setPrefHeight(40);
         BorderPane.setAlignment(gameTray,Pos.BOTTOM_CENTER);
+
+        VBox sidePanel = new VBox(5);
+        Button resetButton = new Button("Reset");
+        Button rightButton = new Button("Right");
+        Button leftButton = new Button("Left");
+        Button drawButton = new Button("Draw");
+        BorderPane.setAlignment(sidePanel,Pos.CENTER_RIGHT);
+        sidePanel.getChildren().addAll(resetButton,rightButton,leftButton,drawButton);
 
 //        topRow.getChildren().addAll(new Label("This is top"));
 //        botRow.getChildren().addAll(drawDomino(6), drawDomino(2),domino2,DominoMap.get("1:2"),DominoMap.get("0:0"));
@@ -140,22 +192,28 @@ public class DominosGUI extends Application{
                 System.out.println(s.toString());
                 //play move and put into game board at this point
 
+                game.playTurnGUI(s);
                 gameTray.getChildren().remove(temp);
 
             });
             gameTray.getChildren().add(temp);
         }
+
         vbox.getChildren().addAll(topRow,botRow);
 
+
       //  vbox.getChildren().addAll(new Label("This is a "), new Button("is"), new Button("going"),drawDomino(1));
-        BorderPane.setAlignment(vbox, Pos.CENTER);
-        screen.setCenter(vbox);
+
+
+
+
+
+        BorderPane.setAlignment(scrollPane, Pos.CENTER);
+        screen.setRight(sidePanel);
+        screen.setCenter(scrollPane);
         screen.setBottom(gameTray);
 
-//        gameTray.getChildren().clear();
-//        for(Dominos s: game.getHuman().getTray()){
-//            gameTray.getChildren().add(dominoMap.get(s.toString()));
-//        }
+
 
         stage.setScene(new Scene(new StackPane(screen)));
         stage.show();

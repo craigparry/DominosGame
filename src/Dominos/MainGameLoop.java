@@ -245,6 +245,14 @@ public class MainGameLoop {
         computer.printTray();
     }
 
+    /*need to make a method that will play the turn from the GUI and update the
+    * state of the gameboard, player tray if the domino is clicked and has a legal
+    * move*/
+    public void playTurnGUI(Dominos domino){
+
+    }
+
+
     public static void main(String[] args) {
         // write your code here
 //        Dominos ex = new Dominos(2,7);
