@@ -13,6 +13,8 @@ cannot play a piece then the players turn ends.
 If neither player can extend the line of play of the game then the game ends 
 and the last player to play the game wins. 
 
-
-TODO: need to fix the end of game so that if the boneyard runs out
+fixed the end of game so that if the boneyard runs out
 the game doesn't immediately end, but check first if the other player can make a move.
+
+TODO: If I had more time to fix it I would refactor some of my code 
+for my game loop that plays the computer turn s that it would draw

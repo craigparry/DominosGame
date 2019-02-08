@@ -37,7 +37,6 @@ public class MainGameLoop {
         human = new Player(false);
        // human.setTray(grave.initDraw(human.getTray()));
         computer = new Player(true);
-
     }
 
     /** Getter for the gameState
@@ -179,7 +178,7 @@ public class MainGameLoop {
                 //game.getComputer().printTray();
                 boolean validTurn = false;
                 while(!validTurn){
-                    validTurn = getHuman().playTurn(getBoard(),getHuman());
+                    validTurn = getHuman().playTurn(getBoard(),getHuman(),getGrave());
 
                     if(validTurn){
                         setWinner(getHuman().toString());
@@ -206,8 +205,11 @@ public class MainGameLoop {
                 boolean validTurn = false;
                 System.out.print("Computer's turn: \n");
 
-                while(!validTurn){
-                    validTurn = getComputer().playTurn(getBoard(),getComputer());
+
+
+
+
+                    validTurn = getComputer().playTurn(getBoard(),getComputer(),getGrave());
                     // make sure graveyardd is not empty!!! then draw
                     if(validTurn){
                         setWinner(getComputer().toString());
@@ -226,11 +228,8 @@ public class MainGameLoop {
                         }
                         break;
                     }
-                    if(!validTurn && !getGrave().isEmpty()){
-                        getComputer().getTray().add(getGrave().draw());
-                        System.out.println("Computer drew");
-                    }
-                }
+
+
                 incTurn();
 
                 // loop while it is the computers turn, check every piece for a

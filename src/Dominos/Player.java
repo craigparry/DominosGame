@@ -96,7 +96,7 @@ public class Player {
      * @param player
      * @return boolean
      */
-    public boolean playTurn(Board board, Player player){
+    public boolean playTurn(Board board, Player player,GraveYard grave){
         boolean left = false;
         boolean right = false;
         Dominos piece;
@@ -166,12 +166,12 @@ public class Player {
             }else{
                 System.out.println("No legal play: pick another piece.");
 //                sc.close();
-                return playTurn(board,player);
+                return playTurn(board,player,grave);
             }
 
         } else{
 
-            return computerMove(board, player);
+            return computerMove(board, player,grave);
 
         }
         // could place this in a legal move
@@ -188,11 +188,11 @@ public class Player {
      * @param player
      * @return boolean
      */
-    public boolean computerMove(Board board, Player player){
+    public boolean computerMove(Board board, Player player, GraveYard grave){
 
-        if(!existLegal(board, player)){
-            return false;
-        }
+//        if(!existLegal(board, player)){
+//            return false;
+//        }
 
         Dominos piece = null;
         for(Dominos s: player.getTray()){
@@ -207,11 +207,20 @@ public class Player {
                 break;
             }
         }
+
         if(piece != null){
             System.out.println("Computer played: "+ piece.toString());
             player.getTray().remove(piece);
             return true;
         }
+        if(piece == null && !grave.isEmpty()){
+            player.getTray().add(grave.draw());
+            return computerMove(board,player,grave);
+        }
+        if(piece == null && grave.isEmpty()){
+            return false;
+        }
+
         return false;
     }
 

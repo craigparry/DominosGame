@@ -8,11 +8,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.*;
-
 import javafx.scene.control.*;
-
 import javafx.scene.input.MouseEvent;
-
 import javafx.scene.control.ScrollPane;
 
 
@@ -32,7 +29,14 @@ public class DominosGUI extends Application{
     private Button leftButton;
     private Button drawButton;
     private ScrollPane scrollTray;
+    private Label empty;
 
+    public void setGameTray(){
+        gameTray.getChildren().clear();
+        for(Dominos s: game.getHuman().getTray()){
+            addGameTray(s);
+        }
+    }
     public Canvas drawBlank(){
         Canvas canvas = new Canvas(40,40);
         canvas.setOpacity(100);
@@ -94,6 +98,11 @@ public class DominosGUI extends Application{
         return canvas;
     }
     public void toggleDraw(){
+        if(game.getGrave().isEmpty()) {
+          drawButton.setDisable(true);
+          empty.setText("Grave Empty");
+          return;
+        }
         if(!game.getHuman().existLegal(game.getBoard(),game.getHuman())){
             drawButton.setDisable(false);
             game.getHuman().printTray();
@@ -119,6 +128,9 @@ public class DominosGUI extends Application{
                 botRow.getChildren().add(temp);
             }
         }
+        if(game.getGrave().isEmpty() && !game.getHuman().existLegal(game.getBoard(),game.getHuman()) && !game.getComputer().existLegal(game.getBoard(),game.getComputer())){
+            resetButton.setDisable(false);
+        }
     }
     public void addGameTray(Dominos domino){
         HBox temp = new HBox();
@@ -131,8 +143,13 @@ public class DominosGUI extends Application{
             //play move and put into game board at this point
             boolean legal = game.playTurnGUI(domino, game.getHuman());
             if(legal){
-                updateBoard();
+                game.setWinner("Human");
                 gameTray.getChildren().remove(temp);
+                boolean compLegal = game.getComputer().computerMove(game.getBoard(),game.getComputer(),game.getGrave());
+                if(compLegal){
+                    game.setWinner("Computer");
+                }
+                updateBoard();
             }
 
 
@@ -249,34 +266,41 @@ public class DominosGUI extends Application{
         rightButton = new Button("Right");
         leftButton = new Button("Left");
         drawButton = new Button("Draw");
+        empty = new Label();
         drawButton.setDisable(true);
         drawButton.setOnAction(event ->{
             // draw domino from graveyard and put in player tray
-            Dominos hold = game.getGrave().draw();
-            game.getHuman().getTray().add(hold);
-            addGameTray(hold);
-            toggleDraw();
+            if(!game.getGrave().isEmpty()){
+                Dominos hold = game.getGrave().draw();
+                game.getHuman().getTray().add(hold);
+                addGameTray(hold);
+                toggleDraw();
+            } else {
+                toggleDraw();
+            }
+
 
         });
 
+        resetButton.setOnAction(event ->{
+            // draw domino from graveyard and put in player tray
+            game.newGame();
+            game.getHuman().setTray(game.getGrave().initDraw(game.getHuman().getTray()));
+            game.getComputer().setTray(game.getGrave().initDraw(game.getComputer().getTray()));
+            updateBoard();
+            empty = new Label();
+            setGameTray();
+            resetButton.setDisable(true);
+
+        });
 
         rightButton.setDisable(true);
         leftButton.setDisable(true);
         resetButton.setDisable(true);
         BorderPane.setAlignment(sidePanel,Pos.CENTER_RIGHT);
-        sidePanel.getChildren().addAll(resetButton,rightButton,leftButton,drawButton);
+        sidePanel.getChildren().addAll(resetButton,rightButton,leftButton,drawButton,empty);
 
-//        topRow.getChildren().addAll(new Label("This is top"));
-//        botRow.getChildren().addAll(drawDomino(6), drawDomino(2),domino2,DominoMap.get("1:2"),DominoMap.get("0:0"));
-//        botRow.getChildren().addAll(dominoMap.get("1:1"),dominoMap.get("1:2"));
-
-        for(Dominos s: game.getHuman().getTray()){
-            addGameTray(s);
-//
-        }
-
-
-      //  vbox.getChildren().addAll(new Label("This is a "), new Button("is"), new Button("going"),drawDomino(1));
+        setGameTray();
 
 
         vbox.getChildren().addAll(topRow,botRow);
@@ -285,15 +309,11 @@ public class DominosGUI extends Application{
         screen.setCenter(scrollPane);
         screen.setBottom(scrollTray);
 
-
-
         stage.setScene(new Scene(new StackPane(screen)));
         stage.show();
-
     }
 
     public static void main (String[] args){
         launch(args);
     }
-
 }
