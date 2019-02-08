@@ -28,10 +28,11 @@ public class DominosGUI extends Application{
     private ScrollPane scrollPane;
     private HBox gameTray;
     private VBox sidePanel;
-    Button resetButton;
-    Button rightButton;
-    Button leftButton;
-    Button drawButton;
+    private Button resetButton;
+    private Button rightButton;
+    private Button leftButton;
+    private Button drawButton;
+    private ScrollPane scrollTray;
 
     public Canvas drawBlank(){
         Canvas canvas = new Canvas(40,40);
@@ -78,14 +79,16 @@ public class DominosGUI extends Application{
                 break;
             case 6:
                 // make horizontal
-                gc.strokeOval(10,19,2,2);
-                gc.strokeOval(28,19,2,2);
+
                 gc.strokeOval(10,10,2,2);
                 gc.strokeOval(28,28,2,2);
+                gc.strokeOval(19,10,2,2);
+                gc.strokeOval(19,28,2,2);
                 gc.strokeOval(28,10,2,2);
                 gc.strokeOval(10,28,2,2);
+
                 break;
-            default: ;
+            default:
                 break;
         }
 
@@ -170,9 +173,8 @@ public class DominosGUI extends Application{
 //        BorderPane.setAlignment(botRow,Pos.BOTTOM_CENTER);
 //        gamePane.setTop(topRow);
 //        gamePane.setBottom(botRow);
+
         scrollPane = new ScrollPane();
-
-
         scrollPane.setContent(vbox);
         scrollPane.setPrefSize(vbox.getWidth(),vbox.getHeight());
         scrollPane.setMinHeight(140);
@@ -181,6 +183,7 @@ public class DominosGUI extends Application{
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToWidth(true);
+
 
 
 
@@ -225,12 +228,24 @@ public class DominosGUI extends Application{
 //        DominoMap.put("0:0",temp);
 
         gameTray = new HBox(2);
+        scrollTray = new ScrollPane(gameTray);
+        scrollTray.setContent(gameTray);
+        scrollTray.setPrefSize(gameTray.getWidth(),gameTray.getHeight());
+        scrollTray.setMinHeight(60);
+        scrollTray.setMaxHeight(60);
+        scrollTray.setMinWidth(100);
+        scrollTray.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollTray.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollTray.setFitToWidth(true);
+
+        screen.setBackground(new Background(new BackgroundFill(Color.BLACK, null,null)));
         gameTray.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET,null,null)));
         gameTray.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
         gameTray.setPrefHeight(40);
-        BorderPane.setAlignment(gameTray,Pos.BOTTOM_CENTER);
+        BorderPane.setAlignment(scrollTray,Pos.BOTTOM_CENTER);
 
         sidePanel = new VBox(5);
+        sidePanel.setBackground(new Background(new BackgroundFill(Color.WHITE, null,null)));
         resetButton = new Button("Reset");
         rightButton = new Button("Right");
         leftButton = new Button("Left");
@@ -275,7 +290,7 @@ public class DominosGUI extends Application{
         BorderPane.setAlignment(scrollPane, Pos.CENTER);
         screen.setRight(sidePanel);
         screen.setCenter(scrollPane);
-        screen.setBottom(gameTray);
+        screen.setBottom(scrollTray);
 
 
 
