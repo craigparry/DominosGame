@@ -238,9 +238,9 @@ public class MainGameLoop {
             }
         }
     gameOver();
-        System.out.println("Player tray");
+        System.out.println("Player tray:");
         human.printTray();
-        System.out.println("Computer tray");
+        System.out.println("Computer tray:");
         computer.printTray();
     }
 
