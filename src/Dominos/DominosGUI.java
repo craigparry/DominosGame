@@ -11,7 +11,6 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ScrollPane;
-//import javafx.scene.control.Dialogs;
 import javafx.scene.control.Alert.*;
 
 public class DominosGUI extends Application{
@@ -37,11 +36,7 @@ public class DominosGUI extends Application{
             addGameTray(s);
         }
     }
-    public Canvas drawBlank(){
-        Canvas canvas = new Canvas(40,40);
-        canvas.setOpacity(100);
-        return canvas;
-    }
+
     public Canvas drawDomino(int num){
         Canvas canvas;
         GraphicsContext gc;
@@ -105,12 +100,21 @@ public class DominosGUI extends Application{
         }
         if(!game.getHuman().existLegal(game.getBoard(),game.getHuman())){
             drawButton.setDisable(false);
-            game.getHuman().printTray();
+
         } else{
             drawButton.setDisable(true);
         }
     }
+    public void playComputer(HBox temp){
+        game.setWinner("Human");
+        gameTray.getChildren().remove(temp);
 
+        boolean compLegal = game.getComputer().computerMove(game.getBoard(),game.getComputer(),game.getGrave());
+        if(compLegal){
+            game.setWinner("Computer");
+        }
+        updateBoard();
+    }
     public void updateBoard(){
         toggleDraw();
         topRow.getChildren().clear();
@@ -156,22 +160,52 @@ public class DominosGUI extends Application{
         temp.getChildren().addAll(drawDomino(domino.getLeftSide()),drawDomino(domino.getRightSide()));
 
         temp.addEventHandler( MouseEvent . MOUSE_PRESSED , event -> {
-            System . out . println (" pressed "
-                    + event . getX () + " " + event . getY ());
-            System.out.println(domino.toString());
+//            System . out . println (" pressed "
+//                    + event . getX () + " " + event . getY ());
+//            System.out.println(domino.toString());
             //play move and put into game board at this point
-            boolean legal = game.playTurnGUI(domino, game.getHuman());
-            if(legal){
-                game.setWinner("Human");
-                gameTray.getChildren().remove(temp);
-                boolean compLegal = game.getComputer().computerMove(game.getBoard(),game.getComputer(),game.getGrave());
-                if(compLegal){
-                    game.setWinner("Computer");
+            boolean right = game.getBoard().legalMoveRight(domino);
+            boolean left  = game.getBoard().legalMoveLeft(domino);
+            String where ="";
+            if(right && left && !game.getBoard().isEmpty()){
+
+                rightButton.setDisable(false);
+                leftButton.setDisable(false);
+                leftButton.setOnAction(event3 ->{
+
+                    boolean legal;
+                    legal = game.playTurnGUI(domino, game.getHuman(),"left");
+                    if(legal){
+                        playComputer(temp);
+                    }
+                    leftButton.setDisable(true);
+                    rightButton.setDisable(true);
+                });
+
+                rightButton.setOnAction(event2 ->{
+                    boolean legal;
+                    legal = game.playTurnGUI(domino, game.getHuman(),"right");
+                    if(legal){
+                       playComputer(temp);
+                    }
+                    leftButton.setDisable(true);
+                    rightButton.setDisable(true);
+                });
+
+
+            } else{
+                if(left){
+                    where = "left";
                 }
-                updateBoard();
+                if(right){
+                    where = "right";
+                }
+                boolean legal = game.playTurnGUI(domino, game.getHuman(),where);
+
+                if(legal){
+                    playComputer(temp);
+                }
             }
-
-
         });
         gameTray.getChildren().add(temp);
     }
@@ -200,14 +234,10 @@ public class DominosGUI extends Application{
 
         botRow.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET,null,null)));
         botRow.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
-//        botRow.setPrefHeight(new Insets(0,0,0,40));
+
         botRow.setPrefHeight(40);
         topRow.setPrefHeight(40);
-//        BorderPane gamePane = new BorderPane();
-//        BorderPane.setAlignment(topRow,Pos.TOP_CENTER);
-//        BorderPane.setAlignment(botRow,Pos.BOTTOM_CENTER);
-//        gamePane.setTop(topRow);
-//        gamePane.setBottom(botRow);
+
 
         scrollPane = new ScrollPane();
         scrollPane.setContent(vbox);
@@ -220,60 +250,13 @@ public class DominosGUI extends Application{
         scrollPane.setFitToWidth(true);
 
 
-//        Alert alert = new Alert(AlertType.INFORMATION);
-//        alert.setTitle("Information Dialog");
-//        alert.setHeaderText(null);
-//        alert.setContentText("The winner is"+game.getWinner()+"!");
-//
-//        alert.showAndWait();
-
-
-
-//        HBox bigDomino = new HBox();
-
-
-//        Map<String,HBox> dominoMap = new HashMap<>();
-//
-//
-//        for(Dominos d: game.getGrave()){
-//            HBox temp = new HBox();
-//            temp.getChildren().addAll(drawDomino(d.getLeftSide()),drawDomino(d.getRightSide()));
-//
-//            temp.addEventHandler( MouseEvent . MOUSE_PRESSED , event -> {
-//                System . out . println (" pressed "
-//                        + event . getX () + " " + event . getY ());
-//                System.out.println(d.toString());
-//
-//            });
-//            dominoMap.put(d.toString(),temp);
-//        }
-//        Map<String,Button> DominoMap2 = new HashMap<>();
-//        Button dominoButton = new Button();
-//        dominoButton.setGraphic(drawDomino(1));
-
-
-
-//        Canvas domino = drawDomino(6);
-//        Canvas domino2 = drawDomino( 7);
-//        bigDomino.getChildren().addAll(drawDomino(1),drawDomino(1));
-
-//        DominoMap.put("1:2",bigDomino);
-//        HBox temp = new HBox();
-//        temp.addEventHandler( MouseEvent . MOUSE_PRESSED , event -> {
-//            System . out . println (" pressed "
-//                    + event . getX () + " " + event . getY ());
-//        });
-
-//        temp.getChildren().addAll(drawDomino(0),drawDomino(0));
-//        DominoMap.put("0:0",temp);
-
-        gameTray = new HBox(2);
+        gameTray = new HBox(4);
         scrollTray = new ScrollPane(gameTray);
         scrollTray.setContent(gameTray);
         scrollTray.setPrefSize(gameTray.getWidth(),gameTray.getHeight());
         scrollTray.setMinHeight(60);
         scrollTray.setMaxHeight(60);
-        scrollTray.setMinWidth(100);
+        scrollTray.setMinWidth(600);
         scrollTray.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollTray.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollTray.setFitToWidth(true);
@@ -302,8 +285,6 @@ public class DominosGUI extends Application{
             } else {
                 toggleDraw();
             }
-
-
         });
 
         resetButton.setOnAction(event ->{
@@ -312,7 +293,7 @@ public class DominosGUI extends Application{
             game.getHuman().setTray(game.getGrave().initDraw(game.getHuman().getTray()));
             game.getComputer().setTray(game.getGrave().initDraw(game.getComputer().getTray()));
             updateBoard();
-            empty = new Label();
+            empty.setText("");
             setGameTray();
             resetButton.setDisable(true);
 
@@ -326,12 +307,13 @@ public class DominosGUI extends Application{
 
         setGameTray();
 
-
         vbox.getChildren().addAll(topRow,botRow);
         BorderPane.setAlignment(scrollPane, Pos.CENTER);
         screen.setRight(sidePanel);
         screen.setCenter(scrollPane);
         screen.setBottom(scrollTray);
+        screen.setMinWidth(200);
+        screen.setMinHeight(200);
 
         stage.setScene(new Scene(new StackPane(screen)));
         stage.show();

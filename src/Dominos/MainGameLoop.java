@@ -247,25 +247,20 @@ public class MainGameLoop {
     /*need to make a method that will play the turn from the GUI and update the
     * state of the gameboard, player tray if the domino is clicked and has a legal
     * move*/
-    public boolean playTurnGUI(Dominos domino, Player player){
+    public boolean playTurnGUI(Dominos domino, Player player, String where){
         if(getBoard().isEmpty()){
             getBoard().add(domino);
             player.getTray().remove(domino);
             return true;
         }
 
-        if(getBoard().legalMoveLeft(domino)&&getBoard().legalMoveRight(domino)){
-
-
-        }
-
-        if(getBoard().legalMoveRight(domino)){
+        if(where.equals("right")){
             board.placePiece("right",domino);
             player.getTray().remove(domino);
             return true;
         }
 
-        if(getBoard().legalMoveLeft(domino)){
+        if(where.equals("left")){
             board.placePiece("left",domino);
             player.getTray().remove(domino);
             return true;
@@ -275,10 +270,7 @@ public class MainGameLoop {
 
 
     public static void main(String[] args) {
-        // write your code here
-//        Dominos ex = new Dominos(2,7);
-//        GraveYard examp = new GraveYard();
-//        examp.print();
+
         String newGame;
         MainGameLoop game = new MainGameLoop();
 

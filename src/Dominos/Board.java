@@ -11,7 +11,7 @@ import java.util.*;
 public class Board extends LinkedList<Dominos>{
     /** prints the gameboards content in two rows spacing the bottom row by half
      * a domino tile to match the numbers that have been played correctly
-     * @param none
+     * @param
      * @return void
      */
     public void printBoard(){

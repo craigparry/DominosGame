@@ -209,7 +209,7 @@ public class Player {
         }
 
         if(piece != null){
-            System.out.println("Computer played: "+ piece.toString());
+//            System.out.println("Computer played: "+ piece.toString());
             player.getTray().remove(piece);
             return true;
         }
