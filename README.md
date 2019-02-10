@@ -25,8 +25,21 @@ from the graveyard until you have a legal move to play. If the graveyard
  game. The reset button will play a new game and is only enabled when the game 
  is over. 
 
+DominosGame entry point is DominosGUI and DominosGameText entry point is 
+MainGameLoop
+
 fixed the end of game so that if the boneyard runs out
 the game doesn't immediately end, but check first if the other player can make a move.
 
-TODO: If I had more time to fix it I would refactor some of my code 
-for my game loop that plays the computer turn s that it would draw
+TODO: Refactor some of the GUI elements to make them on a ratio scale
+to be more compatible with different screens.
+
+If I had more time to fix it I would refactor some of my code 
+for my game loop so that it is more malleable. I have used methods for both 
+my GUI and text game, but I think that if I were to rethink how I 
+initialized my Text Based game I could have made a method for the main game 
+logic that could be used for both. Right now they are close and just use 
+the same methods for my player and computer turn, but the methods for the 
+Text based game are a bit too attached to the scanner for me to use them 
+with the GUI game. Just not enough time for me to go back and extract all of 
+it at this point. 
