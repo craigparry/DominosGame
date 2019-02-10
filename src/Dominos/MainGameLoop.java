@@ -244,9 +244,13 @@ public class MainGameLoop {
         computer.printTray();
     }
 
-    /*need to make a method that will play the turn from the GUI and update the
+    /**need to make a method that will play the turn from the GUI and update the
     * state of the gameboard, player tray if the domino is clicked and has a legal
-    * move*/
+    * move
+     * @param Dominos domino, Player player, String where
+     * * @return boolean
+     * */
+
     public boolean playTurnGUI(Dominos domino, Player player, String where){
         if(getBoard().isEmpty()){
             getBoard().add(domino);
