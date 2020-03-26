@@ -1,5 +1,7 @@
 This is a readme
 
+Craig Parry Spring2019
+
 How to play the game: 
 Text Game: 
 At the start of the game the board will be empty and the computer and the human
